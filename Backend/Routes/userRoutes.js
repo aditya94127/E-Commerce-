@@ -1,6 +1,6 @@
 const express=require('express')
 const {isauthenticateuser,isAdmin}=require('../Middleware/auth')
-const router=express.Router()  //router is the property of express
+const router=express.Router()  
 const {findOne,Delete,findAll,deletebyid,login,test,logout, userRegister,changePassword,updateDetail,makeAdmin,removeAdmin}=require('../Controllers/userController')
 
 router.route('/login').post(login)  
@@ -8,8 +8,6 @@ router.route('/test').post(test)
 router.route('/register').post(userRegister) 
 router.route('/findone').get(findOne)
 router.route('/find').get(isauthenticateuser,isAdmin,findAll)
-//end point
-// router.route('/get').get(get)
 router.route('/logout').get(logout)
 router.route('/delete').delete(Delete)
 router.route('/deletebyid/:_id').delete(deletebyid)
