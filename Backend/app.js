@@ -18,9 +18,6 @@ app.use(cookieParser())
 
 const user=require('./Routes/userRoutes')
 const product=require('./Routes/productRoutes')
-app.get('/').res.json({
-    message:"home page"
-})
 app.use('/api/v1/product',product)
 app.use('/api/v1/user',user)
 app.use(errorMiddleware)
