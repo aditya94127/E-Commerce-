@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
         type: String
     },
     sellerId: {
-        type: mongoose.Schema.Types.ObjectId,  //this is accepted by mongodb this has key value pairs (to make foreign keys)
+        type: mongoose.Schema.Types.ObjectId,  
         ref: 'User'
     }
 })

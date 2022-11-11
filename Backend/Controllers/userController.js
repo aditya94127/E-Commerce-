@@ -1,11 +1,11 @@
 const userModel = require('../Models/userModel');
-const User=require('../Models/userModel')    //user is database name
+const User=require('../Models/userModel')   
 const JWT=require('jsonwebtoken')
 
 
 const test=async (req,res)=>{
     try{
-        // console.log(User)
+        
         const token=JWT.sign("Aditya",process.env.JWT_SECRET_KEY)    //encrypt generation of token
         const verify=JWT.verify(token,process.env.JWT_SECRET_KEY)    //decrpyt
         res.json({
@@ -20,29 +20,19 @@ const test=async (req,res)=>{
 
 const userRegister=async (req,res)=>{
     try{
-        // console.log('hii...')
-        // console.log(req.query)
-        // // console.log(req.body)
-        // res.send("hello mc")
-        // User.create(req.body);      //this tells that user is table name and which operation is need to be performed. (to interact with mongodb)
-        // res.send('create')
-        // console.log(req.body.name)    //this is to access a particular value (use the name of the key)
 
         if(req.body.confirmPassword!=req.body.password){
              res.send("password doesnot match")
              return
         }
-        const user=await User.create({  //key value-pair
-            // StudentId:req.body.StudentId, 
+        const user=await User.create({ 
+          
             email:req.body.email,
             password:req.body.password,
             isadmin:req.body.isadmin,
             confirmPassword:req.body.confirmPassword,
         })
-        res.send("user registered successfull")
-        // res.json({
-        //     user:user
-        // })
+        res.status(200).json({message:"user registered successfull"})
     }
     catch(e){
         console.log(e)
@@ -54,18 +44,11 @@ const userRegister=async (req,res)=>{
 const login=async(req,res)=>{
     try{
         
-     const user=await  User.findOne({email:req.body.email}).select("+password")  //.select() is used to tell mongo we need to get password
-    //   console.log(logIN)
+     const user=await  User.findOne({email:req.body.email}).select("+password") 
+   
     if(user!=null){       
           const isPasswordMatched=await user.comparePassword(req.body.password)
-        // if(req.body.password==user.password){
-           
-        //     const token=user.getJWTToken();
-        //     res.cookie("token",token).json({
-        //         user,
-        //         message:"user logged in successfully"
-        //     })
-        // }
+        
        
          if(!isPasswordMatched){
             res.json({message:"email and password not matched"})
@@ -88,7 +71,7 @@ const login=async(req,res)=>{
 
 const changePassword=async(req,res)=>{
     try{
-        // const user=await User.findById({_id:JWT.verify(req.cookies.token,process.env.JWT_SECRET_KEY).id})
+        
         const user=await User.findById({_id:req.user._id})
         user.password=req.body.newPassword
         await user.save()        

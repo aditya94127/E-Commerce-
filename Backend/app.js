@@ -4,7 +4,7 @@ const bodyParser=require('body-parser')
 const errorMiddleware = require("./Middleware/error")
 const cookieParser=require('cookie-parser')
 
-app.use(express.json({       //data will also come in json format
+app.use(express.json({      
     limit:"50mb",
 }))
 
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
    extended:true
 }))
 
-app.use(cookieParser())    //this is middleware hence we will use this is app.js
+app.use(cookieParser())    
 
 
 const user=require('./Routes/userRoutes')
